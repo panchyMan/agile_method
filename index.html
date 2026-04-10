@@ -1,0 +1,480 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap');
+
+  :root {
+    --amber: #EF9F27;
+    --amber-light: #FAEEDA;
+    --amber-dark: #633806;
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --teal-dark: #04342C;
+    --blue: #185FA5;
+    --blue-light: #E6F1FB;
+    --blue-dark: #042C53;
+    --coral: #D85A30;
+    --coral-light: #FAECE7;
+    --purple: #534AB7;
+    --purple-light: #EEEDFE;
+    --green: #3B6D11;
+    --green-light: #EAF3DE;
+    --pink: #993556;
+    --pink-light: #FBEAF0;
+    --gray: #5F5E5A;
+    --gray-light: #F1EFE8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: transparent;
+    color: var(--color-text-primary, #2C2C2A);
+    padding: 0 0 24px;
+  }
+
+  .header {
+    padding: 28px 24px 20px;
+    border-bottom: 1.5px solid var(--color-border-tertiary, rgba(0,0,0,0.12));
+    margin-bottom: 24px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: #2C2C2A;
+    color: #F1EFE8;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+  }
+
+  .header p {
+    font-size: 11px;
+    color: var(--color-text-secondary, #5F5E5A);
+    margin-top: 4px;
+  }
+
+  .timeline-bar {
+    display: flex;
+    gap: 3px;
+    padding: 0 24px;
+    margin-bottom: 28px;
+    align-items: center;
+  }
+
+  .tl-seg {
+    height: 6px;
+    border-radius: 3px;
+    flex: 1;
+    transition: opacity 0.2s;
+  }
+
+  .tl-label {
+    font-size: 9px;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.06em;
+    padding: 0 4px;
+    white-space: nowrap;
+  }
+
+  .sprints {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0 24px;
+  }
+
+  .sprint-card {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 0;
+    position: relative;
+    padding-bottom: 0;
+  }
+
+  .sprint-card:not(:last-child) .spine {
+    border-left: 2px solid var(--color-border-tertiary, rgba(0,0,0,0.1));
+  }
+
+  .spine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2px;
+    gap: 0;
+  }
+
+  .sprint-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 600;
+    flex-shrink: 0;
+    z-index: 1;
+    border: 2px solid transparent;
+    margin-left: 1px;
+  }
+
+  .spine-line {
+    width: 2px;
+    flex: 1;
+    min-height: 16px;
+  }
+
+  .sprint-body {
+    padding: 0 0 32px 16px;
+  }
+
+  .sprint-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .sprint-num {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .sprint-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+  }
+
+  .sprint-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    margin-left: auto;
+  }
+
+  .sprint-desc {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.7;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 11.5px;
+    color: var(--color-text-primary);
+    line-height: 1.5;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: var(--color-background-secondary, rgba(0,0,0,0.03));
+    border: 1px solid var(--color-border-tertiary, rgba(0,0,0,0.08));
+  }
+
+  .task-icon {
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    width: 16px;
+    text-align: center;
+  }
+
+  .schema-tag {
+    display: inline-block;
+    font-size: 9.5px;
+    font-family: 'DM Mono', monospace;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+    opacity: 0.8;
+  }
+
+  .deliverable {
+    margin-top: 10px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 10.5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-left: 3px solid;
+  }
+
+  .deliverable-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    margin-right: 2px;
+  }
+
+  /* Sprint colors */
+  .s1 { --sc: #185FA5; --sl: #E6F1FB; --sd: #042C53; }
+  .s2 { --sc: #EF9F27; --sl: #FAEEDA; --sd: #412402; }
+  .s3 { --sc: #993556; --sl: #FBEAF0; --sd: #4B1528; }
+  .s4 { --sc: #D85A30; --sl: #FAECE7; --sd: #4A1B0C; }
+  .s5 { --sc: #1D9E75; --sl: #E1F5EE; --sd: #04342C; }
+  .s6 { --sc: #534AB7; --sl: #EEEDFE; --sd: #26215C; }
+  .s7 { --sc: #3B6D11; --sl: #EAF3DE; --sd: #173404; }
+
+  .sprint-card .sprint-dot {
+    background: var(--sl);
+    color: var(--sd);
+    border-color: var(--sc);
+  }
+  .sprint-card .spine-line {
+    background: var(--color-border-tertiary, rgba(0,0,0,0.1));
+  }
+  .sprint-card .sprint-badge {
+    background: var(--sl);
+    color: var(--sd);
+  }
+  .sprint-card .deliverable {
+    background: var(--sl);
+    color: var(--sd);
+    border-color: var(--sc);
+  }
+  .sprint-card .task-icon {
+    color: var(--sc);
+  }
+</style>
+
+<div class="header">
+  <div class="header-top">
+    <span class="project-tag">LeCHOW</span>
+    <h1>Agile Sprint Plan</h1>
+  </div>
+  <p>7 sprints · Recommended 2-week cycles · Agile methodology</p>
+</div>
+
+<div class="timeline-bar">
+  <span class="tl-label">Week 1</span>
+  <div class="tl-seg" style="background:#185FA5"></div>
+  <div class="tl-seg" style="background:#EF9F27"></div>
+  <div class="tl-seg" style="background:#993556"></div>
+  <div class="tl-seg" style="background:#D85A30"></div>
+  <div class="tl-seg" style="background:#1D9E75"></div>
+  <div class="tl-seg" style="background:#534AB7"></div>
+  <div class="tl-seg" style="background:#3B6D11"></div>
+  <span class="tl-label">Week 14</span>
+</div>
+
+<div class="sprints">
+
+  <!-- Sprint 1 -->
+  <div class="sprint-card s1">
+    <div class="spine">
+      <div class="sprint-dot">1</div>
+      <div class="spine-line"></div>
+    </div>
+    <div class="sprint-body">
+      <div class="sprint-header">
+        <span class="sprint-num">Sprint 01 · Weeks 1–2</span>
+        <div class="sprint-title">Foundation: Auth & Customer Registration</div>
+        <span class="sprint-badge">Core</span>
+      </div>
+      <p class="sprint-desc">Everything else depends on knowing who the user is. Build registration, login, and verification before a single order is placed.</p>
+      <div class="tasks">
+        <div class="task"><span class="task-icon">◆</span><span>Registered customer signup with <span class="schema-tag" style="background:#E6F1FB;color:#042C53">first_name, last_name, email/phone</span></span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Verification code flow + <span class="schema-tag" style="background:#E6F1FB;color:#042C53">isVerified</span> boolean toggle</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Login session management and protected routes</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Address and contact method selection (email or phone)</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Owner account bootstrapping — first <span class="schema-tag" style="background:#E6F1FB;color:#042C53">Owner{}</span> seeded in DB</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Basic customer profile view and edit</span></div>
+      </div>
+      <div class="deliverable"><span class="deliverable-label">Testable by</span> Registered customers can sign up, verify, and log in.</div>
+    </div>
+  </div>
+
+  <!-- Sprint 2 -->
+  <div class="sprint-card s2">
+    <div class="spine">
+      <div class="sprint-dot">2</div>
+      <div class="spine-line"></div>
+    </div>
+    <div class="sprint-body">
+      <div class="sprint-header">
+        <span class="sprint-num">Sprint 02 · Weeks 3–4</span>
+        <div class="sprint-title">Core Ordering (Registered Customers)</div>
+        <span class="sprint-badge">Critical path</span>
+      </div>
+      <p class="sprint-desc">The heart of LeCHOW. Build product browsing, cart, and full order submission so the Order schema is exercised end-to-end.</p>
+      <div class="tasks">
+        <div class="task"><span class="task-icon">◆</span><span>Product listing by category — appetizer, rice meal, pasta, drink</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Cart with <span class="schema-tag" style="background:#FAEEDA;color:#412402">product_id, quantity, price, special_request</span></span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Order type selection: delivery, pickup, dine_in, reservation</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Order submission — creates <span class="schema-tag" style="background:#FAEEDA;color:#412402">Order{}</span> with status: pending</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Order status tracking page (pending → preparing → ready → completed)</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Skip re-entry of info for logged-in customers</span></div>
+      </div>
+      <div class="deliverable"><span class="deliverable-label">Testable by</span> Logged-in customers can browse, order, and track their order status.</div>
+    </div>
+  </div>
+
+  <!-- Sprint 3 -->
+  <div class="sprint-card s3">
+    <div class="spine">
+      <div class="sprint-dot">3</div>
+      <div class="spine-line"></div>
+    </div>
+    <div class="sprint-body">
+      <div class="sprint-header">
+        <span class="sprint-num">Sprint 03 · Weeks 5–6</span>
+        <div class="sprint-title">Guest Customer Flow</div>
+        <span class="sprint-badge">User type</span>
+      </div>
+      <p class="sprint-desc">Guest ordering is a distinct UX path with its own confirmation stage. Build it now so cashiers handle both customer types before the POS is added.</p>
+      <div class="tasks">
+        <div class="task"><span class="task-icon">◆</span><span>Guest order form — <span class="schema-tag" style="background:#FBEAF0;color:#4B1528">first_name, last_name, phone, address</span> saved to localStorage</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Guest can edit info before checkout</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Guest order submitted with <span class="schema-tag" style="background:#FBEAF0;color:#4B1528">customer_id: null</span></span></div>
+        <div class="task"><span class="task-icon">◆</span><span>"Call Confirmation" stage added to guest order status flow</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Cashier-side view to see pending guest orders needing confirmation</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Cashier marks order confirmed → status advances to preparing</span></div>
+      </div>
+      <div class="deliverable"><span class="deliverable-label">Testable by</span> Cashiers can receive, call-confirm, and process guest orders alongside registered ones.</div>
+    </div>
+  </div>
+
+  <!-- Sprint 4 -->
+  <div class="sprint-card s4">
+    <div class="spine">
+      <div class="sprint-dot">4</div>
+      <div class="spine-line"></div>
+    </div>
+    <div class="sprint-body">
+      <div class="sprint-header">
+        <span class="sprint-num">Sprint 04 · Weeks 7–8</span>
+        <div class="sprint-title">Cashier POS & Transactions</div>
+        <span class="sprint-badge">Operations</span>
+      </div>
+      <p class="sprint-desc">The full cashier interface — walk-in transactions, payment processing, offline capability with sync, and receipt generation.</p>
+      <div class="tasks">
+        <div class="task"><span class="task-icon">◆</span><span>Cashier login with <span class="schema-tag" style="background:#FAECE7;color:#4A1B0C">cashier_id, username, password</span></span></div>
+        <div class="task"><span class="task-icon">◆</span><span>POS interface for walk-in dine-in, pickup, and delivery orders</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Payment method selection: cash, GCash, card</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Transaction record creation — <span class="schema-tag" style="background:#FAECE7;color:#4A1B0C">Transaction{}</span> schema</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Offline POS mode — queue transactions locally</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Sync queued offline transactions when back online</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Receipt generation (printable or digital)</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Cashier online/offline status toggle — <span class="schema-tag" style="background:#FAECE7;color:#4A1B0C">isOnline</span></span></div>
+      </div>
+      <div class="deliverable"><span class="deliverable-label">Testable by</span> Cashiers can complete full POS transactions — online and offline — and generate receipts.</div>
+    </div>
+  </div>
+
+  <!-- Sprint 5 -->
+  <div class="sprint-card s5">
+    <div class="spine">
+      <div class="sprint-dot">5</div>
+      <div class="spine-line"></div>
+    </div>
+    <div class="sprint-body">
+      <div class="sprint-header">
+        <span class="sprint-num">Sprint 05 · Weeks 9–10</span>
+        <div class="sprint-title">Kitchen Dispatch & Order Status</div>
+        <span class="sprint-badge">Operations</span>
+      </div>
+      <p class="sprint-desc">Connect the kitchen to the order system. Real-time status updates flow from kitchen back to cashiers and customers.</p>
+      <div class="tasks">
+        <div class="task"><span class="task-icon">◆</span><span>Kitchen-side order ticket display (grouped by order type)</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Kitchen marks orders: pending → preparing → ready</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Delivery orders advance to: out_for_delivery → completed</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Cancelled order handling and kitchen notification</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Real-time order status visible to customers on their tracking page</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Cashier dashboard reflects live kitchen status per order</span></div>
+      </div>
+      <div class="deliverable"><span class="deliverable-label">Testable by</span> Kitchen staff, cashiers, and customers all see the same live order status.</div>
+    </div>
+  </div>
+
+  <!-- Sprint 6 -->
+  <div class="sprint-card s6">
+    <div class="spine">
+      <div class="sprint-dot">6</div>
+      <div class="spine-line"></div>
+    </div>
+    <div class="sprint-body">
+      <div class="sprint-header">
+        <span class="sprint-num">Sprint 06 · Weeks 11–12</span>
+        <div class="sprint-title">Owner Dashboard & CMS</div>
+        <span class="sprint-badge">Admin</span>
+      </div>
+      <p class="sprint-desc">Give the owner full control — accounts, products, promos, and the storefront appearance. The CMS is the owner's day-to-day tool.</p>
+      <div class="tasks">
+        <div class="task"><span class="task-icon">◆</span><span>Owner login and protected admin routes</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Create and manage cashier accounts — <span class="schema-tag" style="background:#EEEDFE;color:#26215C">Cashier{}</span> schema</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Product management — add, edit, toggle <span class="schema-tag" style="background:#EEEDFE;color:#26215C">isAvailable</span>, update stock</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Promo management — create <span class="schema-tag" style="background:#EEEDFE;color:#26215C">Promo{}</span>, set dates, discount rate, toggle isActive</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Appearance tab — edit homepage content, banners, featured items</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Performance tab — basic product performance view (orders per product)</span></div>
+      </div>
+      <div class="deliverable"><span class="deliverable-label">Testable by</span> Owner can manage the full system — staff, menu, promos, and storefront — without developer help.</div>
+    </div>
+  </div>
+
+  <!-- Sprint 7 -->
+  <div class="sprint-card s7">
+    <div class="spine">
+      <div class="sprint-dot">7</div>
+      <div class="spine-line"></div>
+    </div>
+    <div class="sprint-body">
+      <div class="sprint-header">
+        <span class="sprint-num">Sprint 07 · Weeks 13–14</span>
+        <div class="sprint-title">Analytics, Notifications & Polish</div>
+        <span class="sprint-badge">Launch-ready</span>
+      </div>
+      <p class="sprint-desc">Meaningful only once real transaction data exists. This sprint turns usage data into insight and keeps customers in the loop.</p>
+      <div class="tasks">
+        <div class="task"><span class="task-icon">◆</span><span>Sales reports and transaction logs for owner</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Analytics dashboard — revenue, top products, order volume trends</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Email/SMS notification system for registered customers</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Promo notifications — triggered when <span class="schema-tag" style="background:#EAF3DE;color:#173404">isActive</span> promo goes live</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Bulk order availability and seasonal event announcements</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>UI/UX polish based on staff and customer feedback from sprints 1–6</span></div>
+        <div class="task"><span class="task-icon">◆</span><span>Performance audit, error handling, and pre-launch QA</span></div>
+      </div>
+      <div class="deliverable"><span class="deliverable-label">Testable by</span> Owner sees actionable reports. Customers receive real notifications. System is launch-ready.</div>
+    </div>
+  </div>
+
+</div>
